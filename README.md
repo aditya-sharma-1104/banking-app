@@ -281,11 +281,6 @@ PaymentTransferForm.tsx
 
 Pagination.tsx
 
-🖼️ Screenshots
-
-(Add your own screenshots here)
-
-![App Screenshot](./public/screenshot.png)
 
 ⭐ Support
 
