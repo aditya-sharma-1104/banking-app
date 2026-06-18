@@ -89,6 +89,19 @@ export const topCategoryStyles = {
     },
     icon: "/icons/shopping-bag.svg",
   },
+  Telecom: {
+    bg: "bg-orange-25",
+    circleBg: "bg-orange-100",
+    text: {
+      main: "text-orange-900",
+      count: "text-orange-700",
+    },
+    progress: {
+      bg: "bg-orange-100",
+      indicator: "bg-orange-700",
+    },
+    icon: "/icons/monitor.svg",
+  },
 };
 
 export const transactionCategoryStyles = {
@@ -138,6 +151,18 @@ export const transactionCategoryStyles = {
     borderColor: "",
     backgroundColor: "bg-blue-500",
     textColor: "text-blue-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  Telecom: {
+    borderColor: "border-orange-600",
+    backgroundColor: "bg-orange-500",
+    textColor: "text-orange-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  "E-commerce": {
+    borderColor: "border-purple-600",
+    backgroundColor: "bg-purple-500",
+    textColor: "text-purple-700",
     chipBackgroundColor: "bg-inherit",
   },
 };

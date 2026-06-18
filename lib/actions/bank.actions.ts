@@ -18,6 +18,38 @@ import { getBanks, getBank } from "./user.actions";
 // Get multiple bank accounts
 export const getAccounts = async ({ userId }: getAccountsProps) => {
   try {
+    if (userId === "mock-user-123") {
+      const mockAccounts = [
+        {
+          id: "mock-acc-1",
+          availableBalance: 485050.00,
+          currentBalance: 523012.00,
+          institutionId: "ins_sbi",
+          name: "SBI Savings",
+          officialName: "State Bank of India Savings Account",
+          mask: "4321",
+          type: "depository",
+          subtype: "savings",
+          appwriteItemId: "mock-bank-1",
+          shareableId: "mock-share-1",
+        },
+        {
+          id: "mock-acc-2",
+          availableBalance: 1250000.00,
+          currentBalance: 1250000.00,
+          institutionId: "ins_hdfc",
+          name: "HDFC Bank",
+          officialName: "HDFC Bank Savings Account",
+          mask: "8765",
+          type: "depository",
+          subtype: "savings",
+          appwriteItemId: "mock-bank-2",
+          shareableId: "mock-share-2",
+        }
+      ];
+      return parseStringify({ data: mockAccounts, totalBanks: mockAccounts.length, totalCurrentBalance: 1773012.00 });
+    }
+
     // get banks from db
     const banks = await getBanks({ userId });
 
@@ -45,7 +77,7 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
           type: accountData.type as string,
           subtype: accountData.subtype! as string,
           appwriteItemId: bank.$id,
-          sharaebleId: bank.shareableId,
+          shareableId: bank.shareableId,
         };
 
         return account;
@@ -66,6 +98,179 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
 // Get one bank account
 export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
   try {
+    if (appwriteItemId === "mock-bank-1" || appwriteItemId === "mock-bank-2" || !appwriteItemId) {
+      const isSBI = appwriteItemId !== "mock-bank-2";
+      const account = isSBI ? {
+        id: "mock-acc-1",
+        availableBalance: 485050.00,
+        currentBalance: 523012.00,
+        institutionId: "ins_sbi",
+        name: "SBI Savings",
+        officialName: "State Bank of India Savings Account",
+        mask: "4321",
+        type: "depository",
+        subtype: "savings",
+        appwriteItemId: "mock-bank-1",
+        shareableId: "mock-share-1",
+      } : {
+        id: "mock-acc-2",
+        availableBalance: 1250000.00,
+        currentBalance: 1250000.00,
+        institutionId: "ins_hdfc",
+        name: "HDFC Bank",
+        officialName: "HDFC Bank Savings Account",
+        mask: "8765",
+        type: "depository",
+        subtype: "savings",
+        appwriteItemId: "mock-bank-2",
+        shareableId: "mock-share-2",
+      };
+
+      const mockTransactions = [
+        {
+          id: "tx-1",
+          $id: "tx-1",
+          name: "Zomato Order",
+          paymentChannel: "online",
+          type: "debit",
+          accountId: account.id,
+          amount: 549.00,
+          pending: false,
+          category: "Food and Drink",
+          date: "2026-06-15",
+          image: "",
+          $createdAt: "2026-06-15T10:00:00Z",
+          channel: "online",
+          senderBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+          receiverBankId: "",
+        },
+        {
+          id: "tx-2",
+          $id: "tx-2",
+          name: "Jio Recharge",
+          paymentChannel: "online",
+          type: "debit",
+          accountId: account.id,
+          amount: 299.00,
+          pending: false,
+          category: "Payment",
+          date: "2026-06-14",
+          image: "",
+          $createdAt: "2026-06-14T08:30:00.000Z",
+          channel: "online",
+          senderBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+          receiverBankId: "",
+        },
+        {
+          id: "tx-3",
+          $id: "tx-3",
+          name: "Salary Credit",
+          paymentChannel: "other",
+          type: "credit",
+          accountId: account.id,
+          amount: 75000.00,
+          pending: false,
+          category: "Transfer",
+          date: "2026-06-01",
+          image: "",
+          $createdAt: "2026-06-01T09:00:00Z",
+          channel: "other",
+          senderBankId: "",
+          receiverBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+        },
+        {
+          id: "tx-4",
+          $id: "tx-4",
+          name: "Ola Cabs",
+          paymentChannel: "online",
+          type: "debit",
+          accountId: account.id,
+          amount: 345.00,
+          pending: false,
+          category: "Travel",
+          date: "2026-06-13",
+          image: "",
+          $createdAt: "2026-06-13T18:45:00Z",
+          channel: "online",
+          senderBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+          receiverBankId: "",
+        },
+        {
+          id: "tx-5",
+          $id: "tx-5",
+          name: "Flipkart Purchase",
+          paymentChannel: "online",
+          type: "debit",
+          accountId: account.id,
+          amount: 2199.00,
+          pending: false,
+          category: "Payment",
+          date: "2026-06-12",
+          image: "",
+          $createdAt: "2026-06-12T14:20:00Z",
+          channel: "online",
+          senderBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+          receiverBankId: "",
+        },
+        {
+          id: "tx-6",
+          $id: "tx-6",
+          name: "Swiggy Instamart",
+          paymentChannel: "online",
+          type: "debit",
+          accountId: account.id,
+          amount: 412.00,
+          pending: false,
+          category: "Food and Drink",
+          date: "2026-06-11",
+          image: "",
+          $createdAt: "2026-06-11T20:10:00Z",
+          channel: "online",
+          senderBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+          receiverBankId: "",
+        },
+        {
+          id: "tx-7",
+          $id: "tx-7",
+          name: "Airtel Broadband",
+          paymentChannel: "online",
+          type: "debit",
+          accountId: account.id,
+          amount: 999.00,
+          pending: false,
+          category: "Payment",
+          date: "2026-06-10",
+          image: "",
+          $createdAt: "2026-06-10T11:00:00Z",
+          channel: "online",
+          senderBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+          receiverBankId: "",
+        },
+        {
+          id: "tx-8",
+          $id: "tx-8",
+          name: "Amazon India",
+          paymentChannel: "online",
+          type: "debit",
+          accountId: account.id,
+          amount: 3499.00,
+          pending: false,
+          category: "Payment",
+          date: "2026-06-09",
+          image: "",
+          $createdAt: "2026-06-09T16:30:00Z",
+          channel: "online",
+          senderBankId: isSBI ? "mock-bank-1" : "mock-bank-2",
+          receiverBankId: "",
+        }
+      ];
+
+      return parseStringify({
+        data: account,
+        transactions: mockTransactions,
+      });
+    }
+
     // get bank from db
     const bank = await getBank({ documentId: appwriteItemId });
 
@@ -112,6 +317,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       type: accountData.type as string,
       subtype: accountData.subtype! as string,
       appwriteItemId: bank.$id,
+      shareableId: bank.shareableId,
     };
 
     // sort transactions by date such that the most recent transaction is first
